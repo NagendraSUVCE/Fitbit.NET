@@ -25,9 +25,10 @@ namespace SampleWebMVC.Controllers
         // Setup - prepare the user redirect to Fitbit.com to prompt them to authorize this app.
         public ActionResult Authorize()
         {
-            var appCredentials = new FitbitAppCredentials() {
-                    ClientId = ConfigurationManager.AppSettings["FitbitClientId"],
-                    ClientSecret = ConfigurationManager.AppSettings["FitbitClientSecret"]
+            var appCredentials = new FitbitAppCredentials()
+            {
+                ClientId = ConfigurationManager.AppSettings["FitbitClientId"],
+                ClientSecret = ConfigurationManager.AppSettings["FitbitClientSecret"]
             };
             //make sure you've set these up in Web.Config under <appSettings>:
 
@@ -35,9 +36,10 @@ namespace SampleWebMVC.Controllers
 
             //Provide the App Credentials. You get those by registering your app at dev.fitbit.com
             //Configure Fitbit authenticaiton request to perform a callback to this constructor's Callback method
-            var authenticator = new OAuth2Helper(appCredentials, Request.Url.GetLeftPart(UriPartial.Authority) + "/Fitbit/Callback");
-            string[] scopes = new string[] {"profile"};
-            
+            //var authenticator = new OAuth2Helper(appCredentials, Request.Url.GetLeftPart(UriPartial.Authority) + "/Fitbit/Callback");
+            var authenticator = new OAuth2Helper(appCredentials, "http://localhost/SampleWebMVCOAuth2/Fitbit/Callback");
+            string[] scopes = new string[] { "activity", "heartrate", "location", "nutrition", "profile", "settings", "sleep", "social", "weight" };
+
             string authUrl = authenticator.GenerateAuthUrl(scopes, null);
 
             return Redirect(authUrl);
@@ -48,7 +50,8 @@ namespace SampleWebMVC.Controllers
         {
             FitbitAppCredentials appCredentials = (FitbitAppCredentials)Session["AppCredentials"];
 
-            var authenticator = new OAuth2Helper(appCredentials, Request.Url.GetLeftPart(UriPartial.Authority) + "/Fitbit/Callback");
+            //var authenticator = new OAuth2Helper(appCredentials, Request.Url.GetLeftPart(UriPartial.Authority) + "/Fitbit/Callback"); 
+            var authenticator = new OAuth2Helper(appCredentials, "http://localhost/SampleWebMVCOAuth2/Fitbit/Callback");
 
             string code = Request.Params["code"];
 
