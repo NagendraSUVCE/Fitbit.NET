@@ -7,6 +7,7 @@ using Fitbit.Models;
 using Fitbit.Api.Portable;
 using System.Threading.Tasks;
 using Fitbit.Api.Portable.OAuth2;
+using Newtonsoft.Json;
 
 namespace SampleWebMVC.Controllers
 {
@@ -56,6 +57,8 @@ namespace SampleWebMVC.Controllers
             string code = Request.Params["code"];
 
             OAuth2AccessToken accessToken = await authenticator.ExchangeAuthCodeForAccessTokenAsync(code);
+           
+            System.IO.File.WriteAllText(@"D:\OneDrive - Microsoft\Nagendra\Exercise\FitBit\Token\Token.txt", JsonConvert.SerializeObject(accessToken));
 
             //Store credentials in FitbitClient. The client in its default implementation manages the Refresh process
             var fitbitClient = GetFitbitClient(accessToken);
