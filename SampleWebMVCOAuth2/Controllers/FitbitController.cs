@@ -8,11 +8,15 @@ using Fitbit.Api.Portable;
 using System.Threading.Tasks;
 using Fitbit.Api.Portable.OAuth2;
 using Newtonsoft.Json;
+using System.Data;
+using SampleWebMVCOAuth2.Utilities;
 
 namespace SampleWebMVC.Controllers
 {
     public class FitbitController : Controller
     {
+        static string ConnectionString = @"Server=tcp:learningtech.database.windows.net,1433;Initial Catalog=Learning;Persist Security Info=False;User ID=nagendrasubramanya;Password=AzureLearning#1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+
         //
         // GET: /Fitbit/
 
@@ -59,6 +63,22 @@ namespace SampleWebMVC.Controllers
             OAuth2AccessToken accessToken = await authenticator.ExchangeAuthCodeForAccessTokenAsync(code);
            
             System.IO.File.WriteAllText(@"D:\OneDrive - Microsoft\Nagendra\Exercise\FitBit\Token\Token.txt", JsonConvert.SerializeObject(accessToken));
+            DataTable dt = new DataTable();
+            dt.Columns.Add("AccessToken");
+            DataColumn colDateTime = new DataColumn("TokenGeneratedTime");
+            colDateTime.DataType = System.Type.GetType("System.DateTime");
+            dt.Columns.Add(colDateTime);
+
+
+
+            dt.TableName = "FitbitToken";
+            DataRow dr = dt.NewRow();
+            dr[0] = JsonConvert.SerializeObject(accessToken);
+            dr[1] = DateTime.Now;
+            dt.Rows.Add(dr);
+            DBUtilities.ConnectionString = ConnectionString;
+            DBUtilities.DeleteTableFromDatabase(dt);
+            DBUtilities.InsertDatatableToDatabase(dt);
 
             //Store credentials in FitbitClient. The client in its default implementation manages the Refresh process
             var fitbitClient = GetFitbitClient(accessToken);
