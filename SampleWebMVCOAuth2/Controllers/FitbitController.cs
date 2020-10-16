@@ -15,7 +15,8 @@ namespace SampleWebMVC.Controllers
 {
     public class FitbitController : Controller
     {
-        static string ConnectionString = "";
+        static string ConnectionString = @"Server=tcp:learningtech.database.windows.net,1433;Initial Catalog=Learning;Persist Security Info=False;User ID=nagendrasubramanya;Password=AzureLearning#1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+
         //
         // GET: /Fitbit/
 
@@ -41,7 +42,7 @@ namespace SampleWebMVC.Controllers
             //Provide the App Credentials. You get those by registering your app at dev.fitbit.com
             //Configure Fitbit authenticaiton request to perform a callback to this constructor's Callback method
             //var authenticator = new OAuth2Helper(appCredentials, Request.Url.GetLeftPart(UriPartial.Authority) + "/Fitbit/Callback");
-            var authenticator = new OAuth2Helper(appCredentials, "http://localhost/SampleWebMVCOAuth2/Fitbit/Callback");
+            var authenticator = new OAuth2Helper(appCredentials, "https://samplewebmvcoauth220201016123544.azurewebsites.net/Fitbit/Callback");
             string[] scopes = new string[] { "activity", "heartrate", "location", "nutrition", "profile", "settings", "sleep", "social", "weight" };
 
             string authUrl = authenticator.GenerateAuthUrl(scopes, null);
@@ -55,13 +56,13 @@ namespace SampleWebMVC.Controllers
             FitbitAppCredentials appCredentials = (FitbitAppCredentials)Session["AppCredentials"];
 
             //var authenticator = new OAuth2Helper(appCredentials, Request.Url.GetLeftPart(UriPartial.Authority) + "/Fitbit/Callback"); 
-            var authenticator = new OAuth2Helper(appCredentials, "http://localhost/SampleWebMVCOAuth2/Fitbit/Callback");
+            var authenticator = new OAuth2Helper(appCredentials, "https://samplewebmvcoauth220201016123544.azurewebsites.net/Fitbit/Callback");
 
             string code = Request.Params["code"];
 
             OAuth2AccessToken accessToken = await authenticator.ExchangeAuthCodeForAccessTokenAsync(code);
            
-            System.IO.File.WriteAllText(@"D:\OneDrive - Microsoft\Nagendra\Exercise\FitBit\Token\Token.txt", JsonConvert.SerializeObject(accessToken));
+           // System.IO.File.WriteAllText(@"D:\OneDrive - Microsoft\Nagendra\Exercise\FitBit\Token\Token.txt", JsonConvert.SerializeObject(accessToken));
             DataTable dt = new DataTable();
             dt.Columns.Add("AccessToken");
             DataColumn colDateTime = new DataColumn("TokenGeneratedTime");
