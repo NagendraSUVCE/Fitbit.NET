@@ -38,11 +38,13 @@ namespace SampleWebMVC.Controllers
             //make sure you've set these up in Web.Config under <appSettings>:
 
             Session["AppCredentials"] = appCredentials;
-
+            string link = "https://samplewebmvcoauth220201016123544.azurewebsites.net/Fitbit/Callback";
+            //link = "http://localhost/SampleWebMVCOAuth2/Fitbit/Callback";
             //Provide the App Credentials. You get those by registering your app at dev.fitbit.com
             //Configure Fitbit authenticaiton request to perform a callback to this constructor's Callback method
             //var authenticator = new OAuth2Helper(appCredentials, Request.Url.GetLeftPart(UriPartial.Authority) + "/Fitbit/Callback");
-            var authenticator = new OAuth2Helper(appCredentials, "https://samplewebmvcoauth220201016123544.azurewebsites.net/Fitbit/Callback");
+            //var authenticator = new OAuth2Helper(appCredentials, "https://samplewebmvcoauth220201016123544.azurewebsites.net/Fitbit/Callback");
+            var authenticator = new OAuth2Helper(appCredentials, link);
             string[] scopes = new string[] { "activity", "heartrate", "location", "nutrition", "profile", "settings", "sleep", "social", "weight" };
 
             string authUrl = authenticator.GenerateAuthUrl(scopes, null);
@@ -54,16 +56,23 @@ namespace SampleWebMVC.Controllers
         public async Task<ActionResult> Callback()
         {
             FitbitAppCredentials appCredentials = (FitbitAppCredentials)Session["AppCredentials"];
+            string callbackurl = Request.Url.GetLeftPart(UriPartial.Authority) + "/Fitbit/Callback";
+            callbackurl = "https://samplewebmvcoauth220201016123544.azurewebsites.net/Fitbit/Callback";
+            //callbackurl = "http://localhost/SampleWebMVCOAuth2/Fitbit/Callback";
+            //https://samplewebmvcoauth220201016123544.azurewebsites.net/Fitbit/Callback
+
+            //http://localhost/SampleWebMVCOAuth2/Fitbit/Authorize
+            //http://localhost/SampleWebMVCOAuth2/Fitbit/Callback
 
             //var authenticator = new OAuth2Helper(appCredentials, Request.Url.GetLeftPart(UriPartial.Authority) + "/Fitbit/Callback"); 
-            var authenticator = new OAuth2Helper(appCredentials, "https://samplewebmvcoauth220201016123544.azurewebsites.net/Fitbit/Callback");
-
+            var authenticator = new OAuth2Helper(appCredentials, callbackurl);// "http://localhost/SampleWebMVCOAuth2/Fitbit/Callback");
             string code = Request.Params["code"];
 
             OAuth2AccessToken accessToken = await authenticator.ExchangeAuthCodeForAccessTokenAsync(code);
            
            // System.IO.File.WriteAllText(@"D:\OneDrive - Microsoft\Nagendra\Exercise\FitBit\Token\Token.txt", JsonConvert.SerializeObject(accessToken));
             DataTable dt = new DataTable();
+            dt.Columns.Add("AccessTokenType");
             dt.Columns.Add("AccessToken");
             DataColumn colDateTime = new DataColumn("TokenGeneratedTime");
             colDateTime.DataType = System.Type.GetType("System.DateTime");
@@ -73,8 +82,9 @@ namespace SampleWebMVC.Controllers
 
             dt.TableName = "FitbitToken";
             DataRow dr = dt.NewRow();
-            dr[0] = JsonConvert.SerializeObject(accessToken);
-            dr[1] = DateTime.Now;
+            dr["AccessTokenType"] = "AccessToken";
+            dr["AccessToken"] = JsonConvert.SerializeObject(accessToken);
+            dr["TokenGeneratedTime"] = DateTime.Now;
             dt.Rows.Add(dr);
             DBUtilities.ConnectionString = ConnectionString;
             DBUtilities.DeleteTableFromDatabase(dt);
