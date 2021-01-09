@@ -87,7 +87,7 @@ namespace SampleWebMVC.Controllers
             dr["TokenGeneratedTime"] = DateTime.Now;
             dt.Rows.Add(dr);
             DBUtilities.ConnectionString = ConnectionString;
-            DBUtilities.DeleteTableFromDatabase(dt);
+           // DBUtilities.DeleteTableFromDatabase(dt);
             DBUtilities.InsertDatatableToDatabase(dt);
 
             //Store credentials in FitbitClient. The client in its default implementation manages the Refresh process
