@@ -15,8 +15,8 @@ namespace SampleWebMVC.Controllers
 {
     public class FitbitController : Controller
     {
-        static string ConnectionString = @"Server=tcp:learningtech.database.windows.net,1433;Initial Catalog=Learning;Persist Security Info=False;User ID=nagendrasubramanya;Password=AzureLearning#1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-
+        //static string ConnectionString = @"Server=tcp:learningtech.database.windows.net,1433;Initial Catalog=Learning;Persist Security Info=False;User ID=nagendrasubramanya;Password=AzureLearning#1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+        static string ConnectionString = @"Server=tcp:learningsqldb.database.windows.net,1433;Initial Catalog = Learning; Persist Security Info=False;User ID = nagendra; Password=AzureCricinfo#1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
         //
         // GET: /Fitbit/
 
