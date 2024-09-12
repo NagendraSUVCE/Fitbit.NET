@@ -16,10 +16,11 @@ namespace SampleWebMVC.Controllers
     public class FitbitController : Controller
     {
         //static string ConnectionString = @"Server=tcp:learningtech.database.windows.net,1433;Initial Catalog=Learning;Persist Security Info=False;User ID=nagendrasubramanya;Password=AzureLearning#1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-        static string ConnectionString = @"Server=tcp:learningsqldb.database.windows.net,1433;Initial Catalog = Learning; Persist Security Info=False;User ID = nagendra; Password=AzureCricinfo#1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+        //static string ConnectionString = @"Server=tcp:learningsqldb.database.windows.net,1433;Initial Catalog = Learning; Persist Security Info=False;User ID = nagendra; Password=AzureCricinfo#1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+        static string ConnectionString = @"Server=tcp:learningsqldb.database.windows.net,1433;Initial Catalog=Learning;Persist Security Info=False;User ID=nagendra;Password=AzureLearning#1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=300;";
         //
         // GET: /Fitbit/
-
+        // run http://localhost/SampleWebMVCOAuth2/Fitbit/Authorize
         public ActionResult Index()
         {
             return RedirectToAction("Index", "Home");
@@ -41,7 +42,7 @@ namespace SampleWebMVC.Controllers
             string baseurl = "https://samplewebmvcoauth220201016123544.azurewebsites.net";
             baseurl = "https://samplewebmvcoauth220210618224916.azurewebsites.net/";
             string link = $"{baseurl}Fitbit/Callback";
-            //link = "http://localhost/SampleWebMVCOAuth2/Fitbit/Callback";
+            link = "http://localhost/SampleWebMVCOAuth2/Fitbit/Callback";
             //Provide the App Credentials. You get those by registering your app at dev.fitbit.com
             //Configure Fitbit authenticaiton request to perform a callback to this constructor's Callback method
             //var authenticator = new OAuth2Helper(appCredentials, Request.Url.GetLeftPart(UriPartial.Authority) + "/Fitbit/Callback");
@@ -60,9 +61,9 @@ namespace SampleWebMVC.Controllers
             FitbitAppCredentials appCredentials = (FitbitAppCredentials)Session["AppCredentials"];
             string callbackurl = Request.Url.GetLeftPart(UriPartial.Authority) + "/Fitbit/Callback";
             callbackurl = "https://samplewebmvcoauth220210618224916.azurewebsites.net/Fitbit/Callback";
-            //callbackurl = "http://localhost/SampleWebMVCOAuth2/Fitbit/Callback";
-            //https://samplewebmvcoauth220201016123544.azurewebsites.net/Fitbit/Callback
-
+            callbackurl = "http://localhost/SampleWebMVCOAuth2/Fitbit/Callback";
+        //https://samplewebmvcoauth220201016123544.azurewebsites.net/Fitbit/Callback
+        https://samplewebmvcoauth220210618224916.azurewebsites.net/Fitbit/Callback
             //http://localhost/SampleWebMVCOAuth2/Fitbit/Authorize
             //http://localhost/SampleWebMVCOAuth2/Fitbit/Callback
 
