@@ -42,8 +42,12 @@ namespace SampleWebMVC.Controllers
             Session["AppCredentials"] = appCredentials;
             string baseurl = "https://samplewebmvcoauth220201016123544.azurewebsites.net";
             baseurl = "https://samplewebmvcoauth220210618224916.azurewebsites.net/";
+            baseurl = "https://fitbitcallback.azurewebsites.net/";
             string link = $"{baseurl}Fitbit/Callback";
-            link = "http://localhost/SampleWebMVCOAuth2/Fitbit/Callback";
+            if (Request.Url.GetLeftPart(UriPartial.Authority).ToLower().Contains("local"))
+            {
+                link = "http://localhost/SampleWebMVCOAuth2/Fitbit/Callback";
+            }
             //Provide the App Credentials. You get those by registering your app at dev.fitbit.com
             //Configure Fitbit authenticaiton request to perform a callback to this constructor's Callback method
             //var authenticator = new OAuth2Helper(appCredentials, Request.Url.GetLeftPart(UriPartial.Authority) + "/Fitbit/Callback");
