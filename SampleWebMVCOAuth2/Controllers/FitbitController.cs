@@ -17,8 +17,9 @@ namespace SampleWebMVC.Controllers
     {
         //static string ConnectionString = @"Server=tcp:learningtech.database.windows.net,1433;Initial Catalog=Learning;Persist Security Info=False;User ID=nagendrasubramanya;Password=AzureLearning#1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
         //static string ConnectionString = @"Server=tcp:learningsqldb.database.windows.net,1433;Initial Catalog = Learning; Persist Security Info=False;User ID = nagendra; Password=AzureCricinfo#1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-        static string ConnectionString = @"Server=tcp:learningsqldb.database.windows.net,1433;Initial Catalog=Learning;Persist Security Info=False;User ID=nagendra;Password=AzureLearning#1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=300;";
-        //
+        // static string ConnectionString = @"Server=tcp:learningsqldb.database.windows.net,1433;Initial Catalog=Learning;Persist Security Info=False;User ID=nagendra;Password=AzureLearning#1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=300;";
+        static string ConnectionString = @"Server=tcp:newlearningserver.database.windows.net,1433;Initial Catalog=newlearningdb;Persist Security Info=False;User ID=nagendranewlearningserveradmin;Password=SachKumbDrav#1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=300;";
+
         // GET: /Fitbit/
         // run http://localhost/SampleWebMVCOAuth2/Fitbit/Authorize
         public ActionResult Index()
