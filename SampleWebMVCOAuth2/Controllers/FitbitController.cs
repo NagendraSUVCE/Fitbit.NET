@@ -61,8 +61,12 @@ namespace SampleWebMVC.Controllers
         {
             FitbitAppCredentials appCredentials = (FitbitAppCredentials)Session["AppCredentials"];
             string callbackurl = Request.Url.GetLeftPart(UriPartial.Authority) + "/Fitbit/Callback";
-            callbackurl = "https://samplewebmvcoauth220210618224916.azurewebsites.net/Fitbit/Callback";
-            callbackurl = "http://localhost/SampleWebMVCOAuth2/Fitbit/Callback";
+            // callbackurl = "https://samplewebmvcoauth220210618224916.azurewebsites.net/Fitbit/Callback";
+            if (callbackurl.ToLower().Contains("localhost"))
+            {
+                callbackurl = "http://localhost/SampleWebMVCOAuth2/Fitbit/Callback";
+            }
+            // 
         //https://samplewebmvcoauth220201016123544.azurewebsites.net/Fitbit/Callback
         https://samplewebmvcoauth220210618224916.azurewebsites.net/Fitbit/Callback
             //http://localhost/SampleWebMVCOAuth2/Fitbit/Authorize
